@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topix Technology</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <a class="back-button" onclick="goBack()" href="index.html?fromForm=true"><img src="icons8-back-button-64.png" alt="Back"></a>
+    <div class="container">
+        <h1>REPAIR FORM</h1>
+        <form id="userDataForm">
+            <h2><u>Customer Detail</u></h2>
+            <label for="custId">ID:</label>
+            <input type="text" id="custId">
+            <label for="name">Name:</label>
+            <input type="text" id="name">
+            <label for="address">Address:</label>
+            <textarea id="address" rows="4" cols="50"></textarea>
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone">
+            <h2><u>Service Detail</u></h2>
+            <label for="receivedDate">Received (by date):</label>
+            <input type="date" id="receivedDate">
+            <label for="totalCharges">Total Charges:</label>
+            <input type="text" id="totalCharges">
+            <label for="depositPaid">Deposit Paid:</label>
+            <input type="text" id="depositPaid">
+            <label for="discount">Discount:</label>
+            <input type="text" id="discount">
+            <h2><u>Equipment Detail</u></h2>
+            <label for="equipment">Equipment:</label>
+            <input type="text" id="equipment">
+            <label for="brand">Brand:</label>
+            <input type="text" id="brand">
+            <label for="modelno">Model No:</label>
+            <input type="text" id="modelno">
+            <label for="serialNumb">S/N:</label>
+            <input type="text" id="serialNumb">
+            <label for="warranty">Warranty:</label>
+            <input type="checkbox" id="warranty">
+            <h2><u>Accessories Attached</u></h2>
+            <div class="row">
+                <div class="column">
+                    <label for="adaptor">Adaptor:</label>
+                    <input type="checkbox" id="adaptor" name="adaptor">
+                    <label for="HDD">HDD:</label>
+                    <input type="checkbox" id="HDD" name="HDD">
+                    <label for="RAM">RAM:</label>
+                    <input type="checkbox" id="RAM" name="RAM">
+                </div>
+                <div class="column">
+                    <label for="battery">Battery:</label>
+                    <input type="checkbox" id="battery" name="battery">
+                    <label for="bag">Bag:</label>
+                    <input type="checkbox" id="bag" name="bag">
+                    <label for="case">Case:</label>
+                    <input type="checkbox" id="case" name="case">
+                </div>
+            </div>
+            <h2><u>Pre Diagnosis</u></h2>
+            <div class="row1">
+                <div class="column1">
+                    <p>Step 1:</p>
+                    <label for="adaptive">Adaptive:</label>
+                    <input type="checkbox" id="adaptive" name="adaptive">
+                    <label for="battery1">Battery:</label>
+                    <input type="checkbox" id="battery1" name="battery1">
+                </div>
+                <div class="column1">
+                    <p>Step 2:</p>
+                    <label for="power">Power:</label>
+                    <input type="checkbox" id="power" name="power">
+                    <label for="charging">Charging:</label>
+                    <input type="checkbox" id="charging" name="charging">
+                </div>
+                <div class="column1">
+                    <p>Step 3:</p>
+                    <label for="powerButton">Power Button On/Off:</label>
+                    <input type="checkbox"
+
+ id="powerButton" name="powerButton">
+                    <label for="display">Display:</label>
+                    <input type="checkbox" id="display" name="display">
+                    <label for="beeping">Beeping:</label>
+                    <input type="checkbox" id="beeping" name="beeping">
+                    <label for="blinking">Blinking:</label>
+                    <input type="checkbox" id="blinking" name="blinking">
+                </div>
+            </div>
+            <label for="problem">Problem:</label>
+            <textarea id="problem" name="problem" rows="4" cols="50"></textarea>
+            <button type="button" class="button" onclick="submitForm()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function submitForm() {
+            var custId = document.getElementById("custId").value;
+            var name = document.getElementById("name").value;
+            var address = document.getElementById("address").value;
+            var phone = document.getElementById("phone").value;
+            var receivedDate = document.getElementById("receivedDate").value;
+            var totalCharges = document.getElementById("totalCharges").value;
+            var depositPaid = document.getElementById("depositPaid").value;
+            var discount = document.getElementById("discount").value;
+            var equipment = document.getElementById("equipment").value;
+            var brand = document.getElementById("brand").value;
+            var modelno = document.getElementById("modelno").value;
+            var serialNumb = document.getElementById("serialNumb").value;
+            var warranty = document.getElementById("warranty").checked;
+            var adaptor = document.getElementById("adaptor").checked;
+            var HDD = document.getElementById("HDD").checked;
+            var RAM = document.getElementById("RAM").checked;
+            var battery = document.getElementById("battery").checked;
+            var bag = document.getElementById("bag").checked;
+            var caseAccessory = document.getElementById("case").checked;
+            var adaptive = document.getElementById("adaptive").checked;
+            var battery1 = document.getElementById("battery1").checked;
+            var power = document.getElementById("power").checked;
+            var charging = document.getElementById("charging").checked;
+            var powerButton = document.getElementById("powerButton").checked;
+            var display = document.getElementById("display").checked;
+            var beeping = document.getElementById("beeping").checked;
+            var blinking = document.getElementById("blinking").checked;
+            var problem = document.getElementById("problem").value;
+
+            var customerData = {
+                custId,
+                name,
+                address,
+                phone,
+                receivedDate,
+                totalCharges,
+                depositPaid,
+                discount,
+                equipment,
+                brand,
+                modelno,
+                serialNumb,
+                warranty,
+                accessories: { adaptor, HDD, RAM, battery, bag, caseAccessory },
+                preDiagnosis: { adaptive, battery1, power, charging, powerButton, display, beeping, blinking },
+                problem
+            };
+
+            var customers = JSON.parse(localStorage.getItem('customers')) || [];
+            customers.push(customerData);
+            localStorage.setItem('customers', JSON.stringify(customers));
+            document.getElementById("userDataForm").reset();
+            alert('Form submitted successfully');
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
